@@ -1,0 +1,9 @@
+.todo-list li.completed label .description {
+  color: #cdcdcd;
+  text-decoration: line-through;
+}
+
+.lineThrough {
+  color: #cdcdcd;
+  text-decoration: line-through;
+}
