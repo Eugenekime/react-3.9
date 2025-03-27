@@ -4,7 +4,14 @@ import Task from "./Task";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 
-function TaskList({ tasks, setTasks, error, deleteTask, filteredTasks }) {
+function TaskList({
+  tasks,
+  setTasks,
+  error,
+  deleteTask,
+  filteredTasks,
+  editTask,
+}) {
   const toggleCompletion = (id) => {
     setTasks(
       tasks.map((task) =>
@@ -55,6 +62,7 @@ function TaskList({ tasks, setTasks, error, deleteTask, filteredTasks }) {
             onToggle={toggleCompletion}
             completed={task.completed}
             date={getTimeAgo(task.createdAt)}
+            editTask={editTask}
           />
         ))
       ) : (
@@ -80,6 +88,7 @@ TaskList.propTypes = {
   setTasks: PropTypes.func,
   deleteTask: PropTypes.func,
   filteredTasks: PropTypes.array,
+  editTask: PropTypes.func,
 };
 
 export default TaskList;

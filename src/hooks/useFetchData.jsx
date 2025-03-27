@@ -49,7 +49,6 @@ function useFetchData() {
   };
 
   //////////// The code to create a new task
-
   const addNewTask = async (title) => {
     try {
       const response = await fetch(
@@ -78,6 +77,37 @@ function useFetchData() {
     }
   };
 
+  ///////// the code to edit a task
+  const editTask = async (id, title) => {
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/${id}`,
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: title,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Ошибка при добавлении задачи");
+      }
+
+      const updatedTask = await response.json();
+      setTasks((tasks) =>
+        tasks.map((task) =>
+          task.id === id ? { ...task, title: updatedTask.title } : task
+        )
+      );
+    } catch (error) {
+      console.error("Ошибка:", error.message);
+    }
+  };
+
   ////////// the code to delete all completed task
   // ! Фейковый jsonplaceholder API не поддерживает удаление ресурсов через фильтрацию с помощью параметров запроса !
   const deleteAllCompleted = () => {
@@ -92,6 +122,7 @@ function useFetchData() {
     error,
     handleDeleteData,
     addNewTask,
+    editTask,
     deleteAllCompleted,
   };
 }

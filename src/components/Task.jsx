@@ -2,7 +2,7 @@ import "../assets/styles/task.css";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-function Task({ id, text, onDelete, completed, onToggle, date }) {
+function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
   ///////////    ↓ This code turn a task to an input ↓
   const [isEditing, setIsEditing] = useState(false);
   const handleEdit = () => setIsEditing(!isEditing);
@@ -14,6 +14,7 @@ function Task({ id, text, onDelete, completed, onToggle, date }) {
       onDelete(id);
     } else if (event.key === "Enter") {
       setIsEditing(!isEditing);
+      editTask(id, event.target.value);
     }
   };
 

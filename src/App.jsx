@@ -13,6 +13,7 @@ function App() {
     error,
     handleDeleteData,
     addNewTask,
+    editTask,
     deleteAllCompleted,
   } = useFetchData();
 
@@ -34,6 +35,7 @@ function App() {
         error={error}
         setTasks={setTasks}
         deleteTask={handleDeleteData}
+        editTask={editTask}
       />
       <Footer
         countTasks={tasks}
