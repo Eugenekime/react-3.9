@@ -17,7 +17,7 @@ function useFetchData() {
         const data = await response.json();
         const tasksWithTime = data.map((task) => ({
           ...task,
-          createdAt: new Date(),
+          createdAt: new Date().toISOString(),
         }));
         setTasks(tasksWithTime);
       } catch (err) {
@@ -26,7 +26,7 @@ function useFetchData() {
     };
 
     handleFetchData();
-  }, [setTasks]);
+  }, []);
 
   //////////// The code to delete a task by id
   const handleDeleteData = async (id) => {

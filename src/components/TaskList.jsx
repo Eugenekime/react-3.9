@@ -20,11 +20,11 @@ function TaskList({
     );
   };
 
-  const [, setUpdateTime] = useState(0);
+  const [_, setUpdateTime] = useState(new Date());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setUpdateTime((prev) => prev + 1);
+      setUpdateTime(new Date());
     }, 1000);
 
     return () => clearInterval(interval);
