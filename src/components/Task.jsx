@@ -1,6 +1,6 @@
-import "../assets/styles/task.css";
-import { useState } from "react";
-import PropTypes from "prop-types";
+import '../assets/styles/task.css';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
   ///////////    ↓ This code turn a task to an input ↓
@@ -10,9 +10,9 @@ function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
   /////////// ↓ This code for edit a task ↓
   const [taskText, setTaskText] = useState(text);
   const handleKeyDown = (event) => {
-    if (event.key === "Enter" && event.target.value.trim() === "") {
+    if (event.key === 'Enter' && event.target.value.trim() === '') {
       onDelete(id);
-    } else if (event.key === "Enter") {
+    } else if (event.key === 'Enter') {
       setIsEditing(!isEditing);
       editTask(id, event.target.value);
     }
@@ -20,7 +20,10 @@ function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
 
   return (
     <li className="editing">
-      <div className="view" style={{ display: isEditing ? "none" : "block" }}>
+      <div
+        className="view"
+        style={{ display: isEditing ? 'none' : 'block' }}
+      >
         <input
           className="toggle"
           type="checkbox"
@@ -31,15 +34,18 @@ function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
           <span
             className="description"
             style={{
-              color: completed ? "#cdcdcd" : "",
-              textDecoration: completed ? "line-through" : "",
+              color: completed ? '#cdcdcd' : '',
+              textDecoration: completed ? 'line-through' : '',
             }}
           >
             {taskText}
           </span>
           <span className="created">{`created ${date}`}</span>
         </label>
-        <button className="icon icon-edit" onClick={handleEdit}></button>
+        <button
+          className="icon icon-edit"
+          onClick={handleEdit}
+        ></button>
         <button
           className="icon icon-destroy"
           onClick={() => onDelete(id)}
@@ -49,7 +55,7 @@ function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
         type="text"
         className="edit"
         value={taskText}
-        style={{ display: isEditing ? "block" : "none" }}
+        style={{ display: isEditing ? 'block' : 'none' }}
         onChange={(event) => {
           setTaskText(event.target.value);
         }}
@@ -60,12 +66,23 @@ function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
   );
 }
 
+Task.defaultProps = {
+  text: '',
+  onDelete: () => {},
+  completed: false,
+  onToggle: () => {},
+  date: '',
+  editTask: () => {},
+};
+
 Task.propTypes = {
-  id: PropTypes.number,
-  text: PropTypes.string,
-  onDelete: PropTypes.func,
-  completed: PropTypes.bool,
-  onToggle: PropTypes.func,
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  completed: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired,
+  date: PropTypes.string.isRequired,
+  editTask: PropTypes.func.isRequired,
 };
 
 export default Task;

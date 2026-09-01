@@ -1,9 +1,9 @@
-import { useState } from "react";
-import "../assets/styles/taskFilter.css";
-import PropTypes from "prop-types";
+import { useState } from 'react';
+import '../assets/styles/taskFilter.css';
+import PropTypes from 'prop-types';
 
 function TaskFilter({ setFilter }) {
-  const [active, setActive] = useState("all");
+  const [active, setActive] = useState('all');
   const handleClick = (buttonId) => {
     setActive(buttonId);
     setFilter(buttonId);
@@ -12,24 +12,24 @@ function TaskFilter({ setFilter }) {
     <ul className="filters">
       <li>
         <button
-          className={active === "all" ? `selected` : ""}
-          onClick={() => handleClick("all")}
+          className={active === 'all' ? `selected` : ''}
+          onClick={() => handleClick('all')}
         >
           All
         </button>
       </li>
       <li>
         <button
-          className={active === "active" ? `selected` : ""}
-          onClick={() => handleClick("active")}
+          className={active === 'active' ? `selected` : ''}
+          onClick={() => handleClick('active')}
         >
           Active
         </button>
       </li>
       <li>
         <button
-          className={active === "completed" ? `selected` : ""}
-          onClick={() => handleClick("completed")}
+          className={active === 'completed' ? `selected` : ''}
+          onClick={() => handleClick('completed')}
         >
           Completed
         </button>
@@ -37,6 +37,9 @@ function TaskFilter({ setFilter }) {
     </ul>
   );
 }
+TaskFilter.defaultProps = {
+  setFilter: () => {},
+};
 
 TaskFilter.propTypes = {
   setFilter: PropTypes.func,

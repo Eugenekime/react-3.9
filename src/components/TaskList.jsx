@@ -1,8 +1,8 @@
-import "../assets/styles/taskList.css";
-import { useEffect, useState } from "react";
-import Task from "./Task";
-import PropTypes from "prop-types";
-import { formatDistanceToNow } from "date-fns";
+import '../assets/styles/taskList.css';
+import { useEffect, useState } from 'react';
+import Task from './Task';
+import PropTypes from 'prop-types';
+import { formatDistanceToNow } from 'date-fns';
 
 function TaskList({
   tasks,
@@ -38,12 +38,12 @@ function TaskList({
     return (
       <p
         style={{
-          fontSize: "24px",
-          fontFamily: "inherit",
-          fontWeight: "inherits",
-          lineHeight: "1.4em",
-          color: "gray",
-          textAlign: "center",
+          fontSize: '24px',
+          fontFamily: 'inherit',
+          fontWeight: 'inherits',
+          lineHeight: '1.4em',
+          color: 'gray',
+          textAlign: 'center',
         }}
       >
         {error}
@@ -66,29 +66,38 @@ function TaskList({
           />
         ))
       ) : (
-        <p
+        <li
           style={{
-            fontSize: "24px",
-            fontFamily: "inherit",
-            fontWeight: "inherits",
-            lineHeight: "1.4em",
-            color: "gray",
-            textAlign: "center",
+            fontSize: '24px',
+            fontFamily: 'inherit',
+            fontWeight: 'inherits',
+            lineHeight: '1.4em',
+            color: 'gray',
+            textAlign: 'center',
           }}
         >
           No tasks
-        </p>
+        </li>
       )}
     </ul>
   );
 }
+TaskList.defaultProps = {
+  tasks: [],
+  setTasks: () => {},
+  error: null,
+  deleteTask: () => {},
+  filteredTasks: [],
+  editTask: () => {},
+};
 
 TaskList.propTypes = {
-  tasks: PropTypes.array,
-  setTasks: PropTypes.func,
-  deleteTask: PropTypes.func,
-  filteredTasks: PropTypes.array,
-  editTask: PropTypes.func,
+  tasks: PropTypes.array.isRequired,
+  setTasks: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  deleteTask: PropTypes.func.isRequired,
+  filteredTasks: PropTypes.array.isRequired,
+  editTask: PropTypes.func.isRequired,
 };
 
 export default TaskList;

@@ -1,18 +1,18 @@
-import "../assets/styles/newTaskForm.css";
-import { useState } from "react";
-import PropTypes from "prop-types";
+import '../assets/styles/newTaskForm.css';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function NewTaskForm({ addNewTask }) {
-  const [taskTitle, setTaskTitle] = useState("");
+  const [taskTitle, setTaskTitle] = useState('');
 
   const handleInputChange = (e) => {
     setTaskTitle(e.target.value);
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && taskTitle.trim()) {
+    if (e.key === 'Enter' && taskTitle.trim()) {
       addNewTask(taskTitle);
-      setTaskTitle("");
+      setTaskTitle('');
     }
   };
   return (
@@ -28,8 +28,12 @@ function NewTaskForm({ addNewTask }) {
   );
 }
 
-NewTaskForm.PropTypes = {
-  addNewTask: PropTypes.func,
+NewTaskForm.defaultProps = {
+  addNewTask: () => {},
+};
+
+NewTaskForm.propTypes = {
+  addNewTask: PropTypes.func.isRequired,
 };
 
 export default NewTaskForm;
