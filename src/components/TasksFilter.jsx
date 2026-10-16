@@ -1,35 +1,32 @@
-import { useState } from 'react';
 import '../assets/styles/taskFilter.css';
 import PropTypes from 'prop-types';
+import { useTodoStore } from '../store/todoStore';
 
-function TaskFilter({ setFilter }) {
-  const [active, setActive] = useState('all');
-  const handleClick = (buttonId) => {
-    setActive(buttonId);
-    setFilter(buttonId);
-  };
+function TaskFilter() {
+  const filter = useTodoStore((state) => state.filter);
+  const setFilter = useTodoStore((state) => state.setFilter);
   return (
     <ul className="filters">
       <li>
         <button
-          className={active === 'all' ? `selected` : ''}
-          onClick={() => handleClick('all')}
+          className={filter === 'all' ? `selected` : ''}
+          onClick={() => setFilter('all')}
         >
           All
         </button>
       </li>
       <li>
         <button
-          className={active === 'active' ? `selected` : ''}
-          onClick={() => handleClick('active')}
+          className={filter === 'active' ? `selected` : ''}
+          onClick={() => setFilter('active')}
         >
           Active
         </button>
       </li>
       <li>
         <button
-          className={active === 'completed' ? `selected` : ''}
-          onClick={() => handleClick('completed')}
+          className={filter === 'completed' ? `selected` : ''}
+          onClick={() => setFilter('completed')}
         >
           Completed
         </button>

@@ -1,88 +1,82 @@
 import '../assets/styles/task.css';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useTodoStore } from '../store/todoStore';
+import Modal from './Modal';
 
-function Task({ id, text, onDelete, completed, onToggle, date, editTask }) {
-  ///////////    ↓ This code turn a task to an input ↓
-  const [isEditing, setIsEditing] = useState(false);
-  const handleEdit = () => setIsEditing(!isEditing);
+function Task({ createdAt, data, updatedAt }) {
+  const deleteTodo = useTodoStore((state) => state.deleteTodo);
+  const updateTodo = useTodoStore((state) => state.updateTodo);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  /////////// ↓ This code for edit a task ↓
-  const [taskText, setTaskText] = useState(text);
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter' && event.target.value.trim() === '') {
-      onDelete(id);
-    } else if (event.key === 'Enter') {
-      setIsEditing(!isEditing);
-      editTask(id, event.target.value);
-    }
-  };
+  const dueDate = data.dueDate
+    ? new Date(data.dueDate).toLocaleDateString()
+    : 'No due date';
 
   return (
-    <li className="editing">
-      <div
-        className="view"
-        style={{ display: isEditing ? 'none' : 'block' }}
-      >
-        <input
-          className="toggle"
-          type="checkbox"
-          checked={completed}
-          onChange={() => onToggle(id)}
+    <>
+      <li>
+        <div className="view">
+          <input
+            className="toggle"
+            type="checkbox"
+            checked={data.completed}
+            onChange={() =>
+              updateTodo(data._id, {
+                completed: !data.completed,
+              })
+            }
+          />
+          <div className="titleDiv">
+            <span
+              className="description"
+              style={{
+                color: data.completed ? '#cdcdcd' : '',
+                textDecoration: data.completed ? 'line-through' : '',
+              }}
+            >
+              {data.title}
+            </span>
+            <p className="taskDescription">{data.description}</p>
+            <div className="taskDetails">
+              <span className={`priority priority-${data.priority}`}>
+                Priority: {data.priority}
+              </span>
+
+              <span className="dueDate">Due: {dueDate}</span>
+            </div>
+            <div className="timeDiv">
+              <span className="created">{`created ${createdAt}`}</span>
+              {data.updatedAt ? (
+                <span className="created">{`updated ${updatedAt}`}</span>
+              ) : null}
+            </div>
+          </div>
+          <button
+            type="button"
+            className="icon icon-edit"
+            aria-label="Edit task"
+            onClick={() => setIsModalOpen(true)}
+          ></button>
+          <button
+            type="button"
+            className="icon icon-destroy"
+            onClick={() => deleteTodo(data._id)}
+          ></button>
+        </div>
+      </li>
+      {isModalOpen && (
+        <Modal
+          handleOpen={setIsModalOpen}
+          initialTodo={data}
         />
-        <label>
-          <span
-            className="description"
-            style={{
-              color: completed ? '#cdcdcd' : '',
-              textDecoration: completed ? 'line-through' : '',
-            }}
-          >
-            {taskText}
-          </span>
-          <span className="created">{`created ${date}`}</span>
-        </label>
-        <button
-          className="icon icon-edit"
-          onClick={handleEdit}
-        ></button>
-        <button
-          className="icon icon-destroy"
-          onClick={() => onDelete(id)}
-        ></button>
-      </div>
-      <input
-        type="text"
-        className="edit"
-        value={taskText}
-        style={{ display: isEditing ? 'block' : 'none' }}
-        onChange={(event) => {
-          setTaskText(event.target.value);
-        }}
-        onKeyDown={handleKeyDown}
-        onBlur={() => setIsEditing(false)}
-      />
-    </li>
+      )}
+    </>
   );
 }
 
 Task.defaultProps = {
-  text: '',
-  onDelete: () => {},
-  completed: false,
-  onToggle: () => {},
+  data: {},
   date: '',
-  editTask: () => {},
-};
-
-Task.propTypes = {
-  id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  completed: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired,
-  date: PropTypes.string.isRequired,
-  editTask: PropTypes.func.isRequired,
 };
 
 export default Task;

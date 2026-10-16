@@ -3,22 +3,11 @@ import { useEffect, useState } from 'react';
 import Task from './Task';
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
+import { useTodoStore } from '../store/todoStore';
 
-function TaskList({
-  tasks,
-  setTasks,
-  error,
-  deleteTask,
-  filteredTasks,
-  editTask,
-}) {
-  const toggleCompletion = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
+function TaskList() {
+  const todos = useTodoStore((state) => state.todos);
+  const error = useTodoStore((state) => state.error);
 
   const [_, setUpdateTime] = useState(new Date());
 
@@ -32,6 +21,10 @@ function TaskList({
 
   const getTimeAgo = (createdAt) => {
     return formatDistanceToNow(new Date(createdAt), { addSuffix: true });
+  };
+
+  const getUpdatedTimeAgo = (updatedAt) => {
+    return formatDistanceToNow(new Date(updatedAt), { addSuffix: true });
   };
 
   if (error)
@@ -52,17 +45,15 @@ function TaskList({
 
   return (
     <ul className="todo-list">
-      {filteredTasks.length > 0 ? (
-        filteredTasks.map((task) => (
+      {todos.length > 0 ? (
+        todos.map((task) => (
           <Task
-            text={task.title}
-            key={task.id}
-            id={task.id}
-            onDelete={deleteTask}
-            onToggle={toggleCompletion}
-            completed={task.completed}
-            date={getTimeAgo(task.createdAt)}
-            editTask={editTask}
+            key={task._id}
+            data={task}
+            createdAt={getTimeAgo(task.createdAt)}
+            updatedAt={
+              task.updatedAt ? getUpdatedTimeAgo(task.updatedAt) : null
+            }
           />
         ))
       ) : (

@@ -1,0 +1,100 @@
+.wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+.modalForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #4d4d4d;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.modalForm input,
+.modalForm textarea,
+.modalForm select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  font: inherit;
+  font-weight: 400;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.modalForm input:focus,
+.modalForm textarea:focus,
+.modalForm select:focus {
+  border-color: rgba(175, 47, 47, 0.15);
+  box-shadow: 0 0 0 2px rgba(175, 47, 47, 0.1);
+}
+
+.modalForm textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.error {
+  color: #d93025;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.modalForm input:has(+ .error),
+.modalForm textarea:has(+ .error),
+.modalForm select:has(+ .error) {
+  border-color: #d93025;
+}
+
+.footerDiv {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.back {
+  padding: 10px 18px;
+  border: 1px solid rgba(175, 47, 47, 0.3);
+  border-radius: 5px;
+  background-color: #fff;
+  color: rgba(62, 16, 16, 0.96);
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.back:hover {
+  border-color: rgba(175, 47, 47, 0.6);
+  background-color: rgba(175, 47, 47, 0.06);
+}
+
+@media (max-width: 480px) {
+  .modalForm {
+    max-width: calc(100% - 32px);
+    padding: 22px;
+  }
+}
