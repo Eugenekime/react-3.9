@@ -13,6 +13,14 @@ export const useTodoStore = create((set, get) => ({
     set({ page });
   },
 
+  presence: {
+    workspace: 'default',
+    online: 0,
+    users: [],
+  },
+
+  setPresence: (presence) => set({ presence }),
+
   setLimit: (limit) => set({ limit, page: 1 }),
 
   setFilter: (filter) => set({ filter, page: 1 }),
