@@ -7,6 +7,7 @@ import Modal from './components/Modal';
 import { useEffect, useState } from 'react';
 import { useTodoStore } from './store/todoStore';
 import Pagination from './components/Pagination';
+import { useSocket } from './hooks/useSocket';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +20,8 @@ function App() {
   useEffect(() => {
     loadTodos();
   }, [loadTodos, filter, page, limit]);
+
+  useSocket();
 
   return isOpen ? (
     <Modal handleOpen={setIsOpen} />
